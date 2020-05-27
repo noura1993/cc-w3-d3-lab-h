@@ -3,7 +3,8 @@ require_relative('./artist')
 
 class Album 
 
-    attr_reader :id, :title, :genre
+    attr_reader :id
+    attr_accessor :title, :genre, :artist_id
 
     def initialize(options)
         @id = options['id'].to_i if options['id']
@@ -16,6 +17,12 @@ class Album
         sql = "INSERT INTO albums (title, genre, artist_id) VALUES ($1, $2, $3) RETURNING id;"
         values = [@title, @genre, @artist_id]
         @id = SqlRunner.run(sql, values)[0]['id'].to_i
+    end
+
+    def update()
+        sql = "UPDATE albums SET title = $1, genre = $2, artist_id = $3 WHERE id = $4;"
+        values = [@title, @genre, @artist_id, @id]
+        SqlRunner.run(sql, values)
     end
 
     def self.all()
