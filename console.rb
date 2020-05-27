@@ -26,6 +26,14 @@ prism = Album.new({
 
 prism.save()
 
+witness = Album.new({
+    'title' => "Witness",
+    'genre' => 'electropop',
+    'artist_id' => katy.id
+})
+
+witness.save()
+
 twenty_one = Album.new({
     'title' => 'Twenty One',
     'genre' => 'pop',

@@ -23,4 +23,11 @@ class Album
         return albums_hashes.map{ |album| Album.new(album)}
     end
 
+    # def self.find_all_by_artist(artist)
+    #     sql = "SELECT * FROM albums WHERE artist_id = $1;"
+    #     values = [artist.id]
+    #     albums_hashes = SqlRunner.run(sql, values)
+    #     return albums_hashes.map{ |album| Album.new(album)}
+    # end
+
 end

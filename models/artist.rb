@@ -1,4 +1,5 @@
 require_relative('../db/sql_runner')
+require_relative('./album')
 
 class Artist 
 
@@ -19,6 +20,13 @@ class Artist
         sql = "SELECT * FROM artists;"
         artists_hashes = SqlRunner.run(sql)
         return artists_hashes.map{ |artist| Artist.new(artist)}
+    end
+
+    def albums()
+        sql = "SELECT * FROM albums WHERE artist_id = $1;"
+        values = [@id]
+        albums_hashes = SqlRunner.run(sql, values)
+        return albums_hashes.map{ |album| Album.new(album)}
     end
 
 end
