@@ -10,13 +10,13 @@ katy = Artist.new({
     'name' => 'Katy Perry'
 })
 
-# katy.save()
+katy.save()
 
 adele = Artist.new({
     'name' => 'Adele'
 })
 
-# adele.save()
+adele.save()
 
 prism = Album.new({
     'title' => "Prism",
@@ -24,7 +24,7 @@ prism = Album.new({
     'artist_id' => katy.id
 })
 
-# prism.save()
+prism.save()
 
 twenty_one = Album.new({
     'title' => 'Twenty One',
@@ -32,7 +32,7 @@ twenty_one = Album.new({
     'artist_id' => adele.id
 })
 
-# twenty_one.save()
+twenty_one.save()
 
 binding.pry
 
