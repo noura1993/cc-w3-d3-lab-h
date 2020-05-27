@@ -11,6 +11,13 @@ class Artist
         @name = options['name']
     end
 
+    def albums()
+        sql = "SELECT * FROM albums WHERE artist_id = $1;"
+        values = [@id]
+        albums_hashes = SqlRunner.run(sql, values)
+        return albums_hashes.map{ |album| Album.new(album)}
+    end
+
     def save()
         sql = "INSERT INTO artists (name) VALUES ($1) RETURNING id;"
         values = [@name]
@@ -40,11 +47,12 @@ class Artist
         return artists_hashes.map{ |artist| Artist.new(artist)}
     end
 
-    def albums()
-        sql = "SELECT * FROM albums WHERE artist_id = $1;"
-        values = [@id]
-        albums_hashes = SqlRunner.run(sql, values)
-        return albums_hashes.map{ |album| Album.new(album)}
+    def self.find(id)
+        sql = "SELECT * FROM artists WHERE id = $1;"
+        values = [id]
+        result = SqlRunner.run(sql, values)[0]
+        return nil if result == nil
+        return Artist.new(result)
     end
 
 end

@@ -13,6 +13,13 @@ class Album
         @artist_id = options['artist_id']
     end
 
+    def artist()
+        sql = "SELECT * FROM artists WHERE id = $1;"
+        values = [@artist_id]
+        artist_hash = SqlRunner.run(sql, values)[0]
+        return Artist.new(artist_hash)
+    end
+
     def save()
         sql = "INSERT INTO albums (title, genre, artist_id) VALUES ($1, $2, $3) RETURNING id;"
         values = [@title, @genre, @artist_id]
@@ -42,18 +49,12 @@ class Album
         return albums_hashes.map{ |album| Album.new(album)}
     end
 
-    # def self.find_all_by_artist(artist)
-    #     sql = "SELECT * FROM albums WHERE artist_id = $1;"
-    #     values = [artist.id]
-    #     albums_hashes = SqlRunner.run(sql, values)
-    #     return albums_hashes.map{ |album| Album.new(album)}
-    # end
-
-    def artist()
-        sql = "SELECT * FROM artists WHERE id = $1;"
-        values = [@artist_id]
-        artist_hash = SqlRunner.run(sql, values)[0]
-        return Artist.new(artist_hash)
+    def self.find(id)
+        sql = "SELECT * FROM albums WHERE id = $1;"
+        values = [id]
+        result = SqlRunner.run(sql, values)[0]
+        return nil if result == nil
+        return Album.new(result)
     end
 
 end
